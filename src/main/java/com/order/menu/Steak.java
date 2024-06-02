@@ -12,7 +12,7 @@ public class Steak extends MainDish {
     }
 
     public int calculateCookingTime() {
-        int baseTime = 25;
+        int baseTime = 40;
 
         if (doneness.equals("well-done")) {
             baseTime += 10;

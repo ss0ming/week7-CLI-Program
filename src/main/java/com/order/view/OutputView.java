@@ -47,5 +47,6 @@ public class OutputView {
         }
         System.out.println("-----------------------------------");
         System.out.printf("%-26s %8d\n", "total", total);
+        System.out.println();
     }
 }

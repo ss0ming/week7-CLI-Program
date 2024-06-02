@@ -2,6 +2,8 @@ package com.order.controller;
 
 import com.order.customer.Cart;
 import com.order.customer.Customer;
+import com.order.kiosk.thread.MenuReadyNotificationThread;
+import com.order.kiosk.thread.OrderMenuPreparationThread;
 import com.order.menu.*;
 import com.order.kiosk.CardReader;
 import com.order.view.InputView;
@@ -17,6 +19,21 @@ public class Controller {
 
         Customer customer = new Customer();
         order(customer);
+
+        // 주문 메뉴 완료 알림 스레드
+        MenuReadyNotificationThread notificationThread = new MenuReadyNotificationThread();
+        notificationThread.start();
+
+        // 주문 메뉴 조리 스레드
+        int cookingTime = new Cart(customer.getOrders()).calculateCookingTime() / 10;
+        OrderMenuPreparationThread orderPreparationThread = new OrderMenuPreparationThread(cookingTime, notificationThread);
+        orderPreparationThread.start();
+
+        try {
+            orderPreparationThread.join();
+        } catch (InterruptedException e) {
+            System.out.println("인터럽트 발생!!");
+        }
     }
 
     public static void order(Customer customer) {

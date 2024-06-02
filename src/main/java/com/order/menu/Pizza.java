@@ -9,8 +9,8 @@ public class Pizza extends MainDish {
         this.size = size;
     }
 
-    public int calculateBakingTime() {
-        int bakingTime = 15;
+    public int calculateCookingTime() {
+        int bakingTime = 20;
 
         if (size.equals("mini")) {
             bakingTime += 5;
